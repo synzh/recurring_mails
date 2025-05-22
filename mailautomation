@@ -1,0 +1,70 @@
+function myFunction() {
+  const emailQuotaRemaining = MailApp.getRemainingDailyQuota();
+  // below is to record the remaing quota that have.
+  Logger.log(`Remaining email quota: ${emailQuotaRemaining}`);
+
+  const now = new Date();
+  cdate = now.getDate();
+  cmonth = now.getMonth();
+  rmonth = "";
+
+  // To convert it from digit, due to we needs title to be in readable format.
+  switch (cmonth) {
+    case 0:
+     rmonth = "Jan";
+     break;
+    case 1:
+     rmonth = "Feb";
+     break;
+    case 2:
+     rmonth = "Mar";
+     break;
+    case 3:
+     rmonth = "Apr";
+     break;
+    case 4:
+     rmonth = "May";
+     break;
+    case 5:
+     rmonth = "June";
+     break;
+    case 6:
+     rmonth = "July";
+     break;  
+    case 7:
+     rmonth = "Aug";
+     break;
+    case 8:
+     rmonth = "Sep";
+     break;  
+    case 9:
+     rmonth = "Oct";
+     break;
+    case 10:
+     rmonth = "Nov";
+     break;
+    case 11:
+     rmonth = "Dec";
+     break;
+  }
+
+  message = `The messages that you want to send`;
+  recipient = `emailthatyouwantsend@com`;
+
+  subject = `Our Usage ` + rmonth + ` ` + cdate ;
+  opendraft = GmailApp.createDraft(recipient, subject, message);
+  opendraft.send();
+  // To send mail directly daily,
+  // or you can make it draft, below is for log purpose only
+  const triggers = ScriptApp.getProjectTriggers();
+
+for (let i = 0; i < triggers.length; i++) {
+  if (triggers[i].getTriggerSource() === ScriptApp.TriggerSource.CLOCK) {
+    Logger.log(`${triggers[i].getUniqueId()} source is clock`);
+  } else if (
+      triggers[i].getTriggerSource() === ScriptApp.TriggerSource.SPREADSHEETS) {
+    Logger.log(`${triggers[i].getUniqueId()} source is spreadsheets`);
+  }
+}
+  
+}
